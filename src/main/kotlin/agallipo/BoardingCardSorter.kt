@@ -48,7 +48,7 @@ interface BoardingCardSorter {
         return allDestinations
     }
 
-    //This function returns the next
+    //This function returns the next destination of the boarding ticket given in the first parameter
     fun hasNextDestination(boardingCard: BoardingCard?, boardingCards: MutableList<BoardingCard?>) : BoardingCard?{
         if (boardingCard!!.destination == null)
             return null
