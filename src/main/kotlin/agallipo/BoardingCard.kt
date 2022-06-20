@@ -6,6 +6,7 @@ import java.io.InputStream
 data class BoardingCard(var origin: String?, var destination: String?,  var transport: String?, var gate: String?, var seat: String?)
 //data class CardInformation(val flight: String?, val gate: String?, val seat: String?)
 
+
 interface BoardingCardsReader {
     fun readCards() : MutableList<String>
 }
@@ -29,7 +30,7 @@ interface BoardingCardClassifier {
             if (line.compareTo("{") != 0 && line.compareTo("}") != 0)
                setCardValues(line, boardingCard)
             if (line.compareTo("}") == 0)
-                boardingCards.add(boardingCard)
+                boardingCards.add(boardingCard!!.copy())
         }
         return boardingCards
     }
@@ -39,12 +40,8 @@ interface BoardingCardClassifier {
 
         if (line.contains("origin"))
             boardingCard?.origin = line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1)
-        if (line.contains("destination")) {
-            println(line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1))
-
+        if (line.contains("destination"))
             boardingCard?.destination = line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1)
-            println(boardingCard?.destination)
-        }
         if (line.contains("transport"))
             boardingCard?.transport = line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1)
         if (line.contains("gate"))
@@ -55,10 +52,8 @@ interface BoardingCardClassifier {
     }
 }
 
-class BoardingCardJsonParser(val pathname: String) : BoardingCardClassifier {
+open class BoardingCardJsonParser(val pathname: String) : BoardingCardClassifier, BoardingCardSorter {
     var boardingCardsFile = BoardingCardsFile(pathname)
     var boardingCards = parseLine(boardingCardsFile)
-
-
 }
 
