@@ -1,20 +1,74 @@
 package agallipo
 
+import java.io.ObjectInputFilter.merge
+
 interface BoardingCardSorter {
-    //This function will divide all the boarding cards into lists of flight-paths, then it would apply the topSort
-    //function to each list, and once it's sorted it would join all the list (with a flatMap) for returning the all the
-    //sorted tickets
-   /* fun sortTickets(boardingCards: MutableList<BoardingCard?>, pathname: String) : MutableList<BoardingCard?>{
 
+    //This function divides  all the boarding cards into lists of flight-paths, iterating over all the boarding cards,
+    //it first checks if the boarding card can be joined to any journey, if not, it creates a new element in the
+    //list of flighPaths. Then it looks over if any flight path can be joined
+
+    fun sortTickets(boardingCards: MutableList<BoardingCard?>) : MutableList<MutableList<BoardingCard?>>{
+        var flightPaths = mutableListOf<MutableList<BoardingCard?>>()
         for (boardingCard in boardingCards){
-            if ()
+            if (!matchFlightPath(boardingCard, flightPaths))
+                flightPaths.add(mutableListOf<BoardingCard?>(boardingCard))
+            checkJoinFlightPath(flightPaths)
         }
-    }*/
+        /*for (flight in flightPaths){
+            checkJoinFlightPath(flightPaths)
+        }*/
+        return flightPaths
+    }
 
+    //This function iterates over the flight paths and checks,returning a boolean, if the given boarding card as a
+    // parameter can be added at the end or beginning of any journey.
+    fun matchFlightPath(boardingCard: BoardingCard?, flightPaths : MutableList<MutableList<BoardingCard?>>) : Boolean
+    {
+        for (path in flightPaths)
+        {
+            if (boardingCard!!.origin == path[0]!!.destination){
+                path.add(0,boardingCard)
+                return true
+            }
+            if (boardingCard!!.origin == path[path.size - 1]!!.destination){
+                path.add(boardingCard)
+                return true
+            }
+        }
+        return false
+    }
+
+    //This function iterates over all the flight paths and looks over if any of them can be joined, if that occurs it
+    //would modify the list of flightPaths adding the elements that matches to the corresponding journey and before
+    // deleting the list element that matches
+    fun checkJoinFlightPath(flightPaths : MutableList<MutableList<BoardingCard?>>) {
+        var i = 0
+        var j : Int
+
+        while (i < flightPaths.size - 1){
+            j = i + 1
+            while (j < flightPaths.size)
+            {
+                if (flightPaths[i][0]!!.origin == flightPaths[j][flightPaths[j].size - 1]!!.destination){
+                    flightPaths[j].addAll(flightPaths[i])
+                    flightPaths.removeAt(i)
+                    return
+                }
+                j++
+            }
+            i++
+        }
+    }
+
+
+    //The topological sort algorithm was the firs approach to this problem, bus as whe have more than one journey it
+    //can't be applied
+    /*
     //This function sorts topologically a list of boarding cards, but as the problem may have more than one flight-path
     //(graph) the function may be called for each route.
     //It returns the sorted boarding tickets.
-    fun topSort(boardingCards: MutableList<BoardingCard?>, pathname: String) : MutableList<BoardingCard?> {
+    fun topSort(boardingCards: MutableList<BoardingCard?>) : MutableList<BoardingCard?> {
         var sortedStack = mutableListOf<BoardingCard?>()
         var visited = mutableListOf<BoardingCard?>()
         for (boardingCard in boardingCards){
@@ -58,4 +112,6 @@ interface BoardingCardSorter {
         }
         return null
     }
+
+     */
 }

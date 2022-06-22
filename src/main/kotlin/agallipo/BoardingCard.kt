@@ -53,7 +53,7 @@ interface BoardingCardClassifier {
 }
 
 open class BoardingCardJsonParser(val pathname: String) : BoardingCardClassifier, BoardingCardSorter {
-    var boardingCardsFile = BoardingCardsFile(pathname)
+    private var boardingCardsFile = BoardingCardsFile(pathname)
     var boardingCards = parseLine(boardingCardsFile)
 }
 
