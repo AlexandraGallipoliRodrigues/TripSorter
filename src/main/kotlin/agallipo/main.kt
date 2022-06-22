@@ -1,6 +1,6 @@
 package agallipo
 
-
+//created by alex :)
 fun main(args: Array<String>) {
     val pathname = "/Users/cxb0507/Desktop/example.json"
     var boardingCardJsonParser = BoardingCardJsonParser(pathname)
