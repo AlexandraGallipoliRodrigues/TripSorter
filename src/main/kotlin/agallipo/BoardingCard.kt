@@ -29,8 +29,11 @@
             for (line in lines ) {
                 if (line.compareTo("{") != 0 && line.compareTo("}") != 0)
                    setCardValues(line, boardingCard)
-                if (line.compareTo("}") == 0)
+                if (line.compareTo("}") == 0){
                     boardingCards.add(boardingCard!!.copy())
+                    boardingCard = BoardingCard(null,null,null,null,null)
+                    
+                }
             }
             return boardingCards
         }
