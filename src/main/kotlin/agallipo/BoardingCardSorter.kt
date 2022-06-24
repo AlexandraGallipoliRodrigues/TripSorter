@@ -25,11 +25,11 @@
         // parameter can be added at the end or beginning of any journey.
         fun matchFlightPath(boardingCard: BoardingCard?, flightPaths: MutableList<MutableList<BoardingCard?>>): Boolean {
             for (path in flightPaths) {
-                if (boardingCard!!.origin == path[0]!!.destination) {
+                if (boardingCard!!.origin == path[path.size - 1]!!.destination) {
                     path.add(0, boardingCard)
                     return true
                 }
-                if (boardingCard!!.origin == path[path.size - 1]!!.destination) {
+                if (boardingCard!!.destination == path[0]!!.origin) {
                     path.add(boardingCard)
                     return true
                 }

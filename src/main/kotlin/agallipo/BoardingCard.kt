@@ -32,7 +32,7 @@
                 if (line.compareTo("}") == 0){
                     boardingCards.add(boardingCard!!.copy())
                     boardingCard = BoardingCard(null,null,null,null,null)
-                    
+
                 }
             }
             return boardingCards
