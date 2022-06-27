@@ -14,9 +14,7 @@ class BoardingCardsFile(val pathname: String) {
        var boardingCards = gson.fromJson(reader, Array<BoardingCard>::class.java).asList()
 
        return boardingCards
-
    }
-
 }
 
 
