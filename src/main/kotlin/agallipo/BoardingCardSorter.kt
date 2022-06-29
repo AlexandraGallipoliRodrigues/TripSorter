@@ -1,21 +1,21 @@
 package agallipo
 
-import java.io.ObjectInputFilter.merge
+class BoardingCardSorter : Journeys() {
 
-class BoardingCardSorter {
+    fun sortTickets(boardingCards : List<BoardingCard>) : List<journey> {
+        var auxJourneys =  mutableListOf<mutableJourney>()
+        var allJourneys = listOf<journey>()
 
-    fun sortTickets(boardingCards: List<BoardingCard>) : MutableList<MutableList<BoardingCard>> {
-        var flightPaths = mutableListOf<MutableList<BoardingCard>>()
         for (boardingCard in boardingCards) {
-            if (!matchFlightPath(boardingCard, flightPaths))
-                flightPaths.add(mutableListOf<BoardingCard>(boardingCard))
-            checkJoinFlightPath(flightPaths)
+            if (!matchFlightPath(boardingCard, auxJourneys))
+                allJourneys = addJourney(auxJourneys, boardingCard)
+            checkJoinFlightPath(auxJourneys)
         }
-        return flightPaths
+        return allJourneys
     }
 
-    fun matchFlightPath(boardingCard: BoardingCard, flightPaths : MutableList<MutableList<BoardingCard>>) : Boolean {
-        for (path in flightPaths) {
+    fun matchFlightPath(boardingCard : BoardingCard, auxJourneys : MutableList<mutableJourney>) : Boolean {
+        for (path in auxJourneys) {
             if (boardingCard.destination == path[0].origin) {
                 path.add(0,boardingCard)
                 return true
@@ -28,21 +28,22 @@ class BoardingCardSorter {
         return false
     }
 
-    fun checkJoinFlightPath(flightPaths : MutableList<MutableList<BoardingCard>>) {
+    fun checkJoinFlightPath(auxJourneys : MutableList<mutableJourney>) :  List<journey>{
+        var allJourneys = listOf<journey>()
         var i = 0
         var j : Int
 
-        while (i < flightPaths.size - 1) {
+        while (i < auxJourneys.size - 1) {
             j = i + 1
-            while (j < flightPaths.size) {
-                if (flightPaths[i][0].origin == flightPaths[j][flightPaths[j].size - 1].destination) {
-                    flightPaths[j].addAll(flightPaths[i])
-                    flightPaths.removeAt(i)
-                    return
+            while (j < auxJourneys.size) {
+                if (auxJourneys[i][0].origin == auxJourneys[j][auxJourneys[j].size - 1].destination) {
+                    allJourneys = joinJourney(auxJourneys, j, i)
+                    return allJourneys
                 }
                 j++
             }
             i++
         }
+        return allJourneys
     }
 }

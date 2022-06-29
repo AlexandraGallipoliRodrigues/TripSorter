@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import java.io.File
 import java.io.InputStream
 
-data class BoardingCard(var origin: String?, var destination: String?,  var transport: String?, var gate: String?, var seat: String?)
+data class BoardingCard(var origin: String?, var destination: String?,  var transport: String, var gate: String, var seat: String)
 
 class BoardingCardsFile(val pathname: String) {
 
