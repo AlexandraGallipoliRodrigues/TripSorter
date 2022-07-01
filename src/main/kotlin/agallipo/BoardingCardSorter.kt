@@ -16,11 +16,11 @@ class BoardingCardSorter : Journeys() {
 
     fun matchFlightPath(boardingCard : BoardingCard, auxJourneys : MutableList<mutableJourney>) : Boolean {
         for (path in auxJourneys) {
-            if (boardingCard.destination == path[0].origin) {
+            if (boardingCard.destination == path[0].origin && boardingCard.destination != null) {
                 path.add(0,boardingCard)
                 return true
             }
-            if (boardingCard.origin == path[path.size - 1].destination) {
+            if (boardingCard.origin == path[path.size - 1].destination && boardingCard.origin != null) {
                 path.add(boardingCard)
                 return true
             }
@@ -36,7 +36,8 @@ class BoardingCardSorter : Journeys() {
         while (i < auxJourneys.size - 1) {
             j = i + 1
             while (j < auxJourneys.size) {
-                if (auxJourneys[i][0].origin == auxJourneys[j][auxJourneys[j].size - 1].destination) {
+                if (auxJourneys[i][0].origin == auxJourneys[j][auxJourneys[j].size - 1].destination &&
+                    auxJourneys[i][0].origin != null) {
                     allJourneys = joinJourney(auxJourneys, j, i)
                     return allJourneys
                 }

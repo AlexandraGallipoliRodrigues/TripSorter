@@ -1,17 +1,30 @@
-import agallipo.BoardingCardSorter
-import agallipo.BoardingCardsFile
-import agallipo.Journeys
-import agallipo.journey
+import agallipo.*
 
 fun main(args: Array<String>) {
-    val pathname = "examples/example.json"
-    val boardingCardsFile = BoardingCardsFile(pathname)
-    val boardingCards = boardingCardsFile.parseFile(pathname)
+    var pathname = "examples/test1.json"
+    var boardingCardsFile = BoardingCardsFile(pathname)
+    var boardingCards = boardingCardsFile.parseFile(pathname)
     val boardingCardSorter = BoardingCardSorter()
-    val flightPaths =boardingCardSorter.sortTickets(boardingCards)
+    var flightPaths = boardingCardSorter.sortTickets(boardingCards)
+    val journeyPrinter = JourneyPrinter()
 
+    journeyPrinter.printJourneys(flightPaths)
 
-    for (i in flightPaths){
-        println("MY flight-path:" + i)
-    }
+    pathname = "examples/test2.json"
+    boardingCardsFile = BoardingCardsFile(pathname)
+    boardingCards = boardingCardsFile.parseFile(pathname)
+    flightPaths = boardingCardSorter.sortTickets(boardingCards)
+    journeyPrinter.printJourneys(flightPaths)
+
+    pathname = "examples/test3.json"
+    boardingCardsFile = BoardingCardsFile(pathname)
+    boardingCards = boardingCardsFile.parseFile(pathname)
+    flightPaths = boardingCardSorter.sortTickets(boardingCards)
+    journeyPrinter.printJourneys(flightPaths)
+
+    pathname = "examples/test4.json"
+    boardingCardsFile = BoardingCardsFile(pathname)
+    boardingCards = boardingCardsFile.parseFile(pathname)
+    flightPaths = boardingCardSorter.sortTickets(boardingCards)
+    journeyPrinter.printJourneys(flightPaths)
 }
