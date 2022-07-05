@@ -1,15 +1,25 @@
 package agallipo
 
 class BoardingCardSorter {
+    private var boardingCards : List<BoardingCard>
 
-    fun sortTickets(boardingCards : List<BoardingCard>) : List<journey> {
-        var auxJourneys =  mutableListOf<mutableJourney>()
+    constructor (boardingCardReference : List<BoardingCard>) {
+        boardingCards=  setBoardingCard(boardingCardReference)
+    }
+
+    fun setBoardingCard(boardingCardReference : List<BoardingCard>) : List<BoardingCard>{
+        boardingCards = boardingCardReference
+        return boardingCards
+    }
+
+    fun sortTickets() : List<journey> {
+        var journeysGenerator =  JourneysGenerator()
         var allJourneys = listOf<journey>()
 
         for (boardingCard in boardingCards) {
-            if (!matchFlightPath(boardingCard, auxJourneys))
-                auxJourneys.add(mutableListOf(boardingCard))
-            allJourneys = checkJoinFlightPath(auxJourneys)
+            if (!matchFlightPath(boardingCard, journeysGenerator.auxJourneys))
+                journeysGenerator.auxJourneys.add(mutableListOf(boardingCard))
+            allJourneys = checkJoinFlightPath(journeysGenerator)
         }
         return allJourneys
     }
@@ -28,18 +38,17 @@ class BoardingCardSorter {
         return false
     }
 
-    private fun checkJoinFlightPath(auxJourneys : MutableList<mutableJourney>) :  List<journey>{
-        val journeyGenerator = JourneysGenerator()
-        var allJourneys = journeyGenerator.copyJourneys(auxJourneys)
+    private fun checkJoinFlightPath(journeysGenerator : JourneysGenerator) :  List<journey>{
+        var allJourneys = journeysGenerator.copyJourneys()
         var i = 0
         var j : Int
 
-        while (i < auxJourneys.size - 1) {
+        while (i < journeysGenerator.auxJourneys.size - 1) {
             j = i + 1
-            while (j < auxJourneys.size) {
-                if (auxJourneys[i][0].origin == auxJourneys[j][auxJourneys[j].size - 1].destination &&
-                    auxJourneys[i][0].origin != null) {
-                    allJourneys = journeyGenerator.joinJourney(auxJourneys, j, i)
+            while (j < journeysGenerator.auxJourneys.size) {
+                if (journeysGenerator.auxJourneys[i][0].origin == journeysGenerator.auxJourneys[j][journeysGenerator.auxJourneys[j].size - 1].destination &&
+                    journeysGenerator.auxJourneys[i][0].origin != null) {
+                    allJourneys = journeysGenerator.joinJourney(j, i)
                     return allJourneys
                 }
                 j++

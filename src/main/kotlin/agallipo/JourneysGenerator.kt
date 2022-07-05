@@ -5,27 +5,29 @@ typealias mutableJourney = MutableList<BoardingCard>
 
 open class JourneysGenerator {
 
-    fun joinJourney(journeysReference : MutableList<mutableJourney>, destIndexJourney : Int, toJoinIndexJourney : Int) : List<journey> {
+    var auxJourneys =  mutableListOf<mutableJourney>()
+
+    fun joinJourney(destIndexJourney : Int, toJoinIndexJourney : Int) : List<journey> {
         val allJourneys : List<journey>
 
-        journeysReference[destIndexJourney].addAll(journeysReference[toJoinIndexJourney])
-        journeysReference.removeAt(toJoinIndexJourney)
-        allJourneys = journeysReference.toList()
+        auxJourneys[destIndexJourney].addAll(auxJourneys[toJoinIndexJourney])
+        auxJourneys.removeAt(toJoinIndexJourney)
+        allJourneys = auxJourneys.toList()
         return allJourneys
     }
 
-    fun addJourney(journeysReference : MutableList<mutableJourney>, boardingCard : BoardingCard) : List<journey> {
+    fun addJourney(boardingCard : BoardingCard) : List<journey> {
         val allJourneys : List<journey>
 
-        journeysReference.add(mutableListOf(boardingCard))
-        allJourneys = journeysReference.toList()
+        auxJourneys.add(mutableListOf(boardingCard))
+        allJourneys = auxJourneys.toList()
         return allJourneys
     }
 
-    fun copyJourneys(journeysReference : MutableList<mutableJourney>) : List<journey> {
+    fun copyJourneys() : List<journey> {
         val allJourneys : List<journey>
 
-        allJourneys = journeysReference.toList()
+        allJourneys = auxJourneys.toList()
         return allJourneys
     }
 
