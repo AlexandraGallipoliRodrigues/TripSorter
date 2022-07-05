@@ -9,18 +9,16 @@ import kotlin.test.assertTrue
 class TestSorter {
     @Test
     fun test() {
-         var mock = mockk<BoardingCard>()
-        val boardingCardSorter = BoardingCardSorter()
         val cards = listOf(
-            BoardingCard("A", "B", "something", "", ""),
-            BoardingCard("B", "C", "something", "", ""),
-            BoardingCard("C", "A", "something", "", ""),
-            BoardingCard("Two", "Three", "something", "", ""),
-            BoardingCard("One", "Two", "something", "", ""),
-            BoardingCard("Three", "Four", "something", "", ""),
+            BoardingCard("A", "B", "something", "", "", "", ""),
+            BoardingCard("B", "C", "something", "", "", "", ""),
+            BoardingCard("C", "A", "something", "", "", "", ""),
+            BoardingCard("Two", "Three", "something", "", "", "", ""),
+            BoardingCard("One", "Two", "something", "", "", "", ""),
+            BoardingCard("Three", "Four", "something", "", "", "", ""),
         )
-
-        val journeys = boardingCardSorter.sortTickets(cards)
+        val boardingCardSorter = BoardingCardSorter(cards)
+        val journeys = boardingCardSorter.sortTickets()
         for (journey in journeys){
             assertTrue("Cards should be sorted") {
                 journey.zipWithNext().all { pair ->
