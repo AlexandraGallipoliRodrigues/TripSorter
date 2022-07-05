@@ -1,0 +1,59 @@
+[{
+"origin": "Barcelona",
+"destination": "Pekin",
+"transport": "airport bus",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": null,
+"seat": null
+}, {
+"origin": "Stockholm",
+"destination": "Tokyo",
+"transport": "flight SK22",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "22",
+"seat": "7B"
+}, {
+"origin": "Madrid",
+"destination": "Barcelona",
+"transport": "train 78A",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "20",
+"seat": "45B"
+}, {
+"origin": "Gerona Airport",
+"destination": "Stockholm",
+"transport": "flight SK455",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "45B",
+"seat": "3A"
+}, {
+"origin": "Italia",
+"destination": "Francia",
+"transport": "flight SK22",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "22",
+"seat": "7B"
+}, {
+"origin": "Alemania",
+"destination": "Italia",
+"transport": "train 78A",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": null,
+"seat": "45B"
+}, {
+"origin": "Francia",
+"destination": "Alemania",
+"transport": "flight SK455",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "45B",
+"seat": "3A"
+}]
+
+

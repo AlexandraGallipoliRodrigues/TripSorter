@@ -1,6 +1,6 @@
 package agallipo
 
-class BoardingCardSorter : Journeys() {
+class BoardingCardSorter {
 
     fun sortTickets(boardingCards : List<BoardingCard>) : List<journey> {
         var auxJourneys =  mutableListOf<mutableJourney>()
@@ -8,13 +8,13 @@ class BoardingCardSorter : Journeys() {
 
         for (boardingCard in boardingCards) {
             if (!matchFlightPath(boardingCard, auxJourneys))
-                allJourneys = addJourney(auxJourneys, boardingCard)
-            checkJoinFlightPath(auxJourneys)
+                auxJourneys.add(mutableListOf(boardingCard))
+            allJourneys = checkJoinFlightPath(auxJourneys)
         }
         return allJourneys
     }
 
-    fun matchFlightPath(boardingCard : BoardingCard, auxJourneys : MutableList<mutableJourney>) : Boolean {
+    private fun matchFlightPath(boardingCard : BoardingCard, auxJourneys : MutableList<mutableJourney>) : Boolean {
         for (path in auxJourneys) {
             if (boardingCard.destination == path[0].origin && boardingCard.destination != null) {
                 path.add(0,boardingCard)
@@ -28,8 +28,9 @@ class BoardingCardSorter : Journeys() {
         return false
     }
 
-    fun checkJoinFlightPath(auxJourneys : MutableList<mutableJourney>) :  List<journey>{
-        var allJourneys = listOf<journey>()
+    private fun checkJoinFlightPath(auxJourneys : MutableList<mutableJourney>) :  List<journey>{
+        val journeyGenerator = JourneysGenerator()
+        var allJourneys = journeyGenerator.copyJourneys(auxJourneys)
         var i = 0
         var j : Int
 
@@ -38,7 +39,7 @@ class BoardingCardSorter : Journeys() {
             while (j < auxJourneys.size) {
                 if (auxJourneys[i][0].origin == auxJourneys[j][auxJourneys[j].size - 1].destination &&
                     auxJourneys[i][0].origin != null) {
-                    allJourneys = joinJourney(auxJourneys, j, i)
+                    allJourneys = journeyGenerator.joinJourney(auxJourneys, j, i)
                     return allJourneys
                 }
                 j++
