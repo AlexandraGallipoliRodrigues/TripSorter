@@ -1,0 +1,35 @@
+[{
+"origin": "Barcelona",
+"destination": "Barcelona",
+"transport": "airport bus",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "0",
+"seat": "0"
+}, {
+"origin": "Barcelona",
+"destination": "Barcelona",
+"transport": "flight SK22",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "22",
+"seat": "7B"
+}, {
+"origin": "Barcelona",
+"destination": "Barcelona",
+"transport": "train 78A",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "20",
+"seat": "45B"
+}, {
+"origin": "Barcelona",
+"destination": "Barcelona",
+"transport": "flight SK455",
+"date": "21/04/2022",
+"hour" : "14:30",
+"gate": "45B",
+"seat": "3A"
+}]
+
+

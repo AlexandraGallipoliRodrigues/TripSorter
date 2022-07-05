@@ -1,59 +1,19 @@
 package agallipo
 
+import com.google.gson.Gson
 import java.io.File
-import java.io.InputStream
 
-data class BoardingCard(var origin: String?, var destination: String?,  var transport: String?, var gate: String?, var seat: String?)
-//data class CardInformation(val flight: String?, val gate: String?, val seat: String?)
+data class BoardingCard(var origin : String?, var destination : String?,  var transport : String, var date : String, var hour : String, var gate : String?, var seat : String?)
 
+class BoardingCardJsonParser(val pathname: String) {
 
-interface BoardingCardsReader {
-    fun readCards() : MutableList<String>
+   fun parseFile(pathname: String) : List<BoardingCard> {
+       val gson = Gson()
+       val reader = File(pathname).inputStream().bufferedReader()
+       var boardingCards = gson.fromJson(reader, Array<BoardingCard>::class.java).asList()
+
+       return boardingCards
+   }
 }
 
-class BoardingCardsFile(val pathname: String) : BoardingCardsReader {
-    override fun readCards(): MutableList<String> {
-        val inputStream: InputStream = File(pathname).inputStream()
-        val lines = mutableListOf<String>()
-        inputStream.bufferedReader().forEachLine(lines::add)
-        return lines
-    }
-}
-
-interface BoardingCardClassifier {
-    fun parseLine(boardingCardsFile: BoardingCardsFile) : MutableList<BoardingCard?> {
-        var boardingCards = mutableListOf<BoardingCard?>()
-        var boardingCard: BoardingCard? = BoardingCard(null,null,null,null,null)
-        var lines = boardingCardsFile.readCards()
-
-        for (line in lines ) {
-            if (line.compareTo("{") != 0 && line.compareTo("}") != 0)
-               setCardValues(line, boardingCard)
-            if (line.compareTo("}") == 0)
-                boardingCards.add(boardingCard!!.copy())
-        }
-        return boardingCards
-    }
-
-    fun setCardValues(line: String, boardingCard: BoardingCard?){
-
-
-        if (line.contains("origin"))
-            boardingCard?.origin = line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1)
-        if (line.contains("destination"))
-            boardingCard?.destination = line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1)
-        if (line.contains("transport"))
-            boardingCard?.transport = line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1)
-        if (line.contains("gate"))
-            boardingCard?.gate = line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1)
-        if (line.contains("seat"))
-            boardingCard?.seat = line.removeRange(line.indexOf("\""), line.lastIndexOf(":") + 1)
-
-    }
-}
-
-open class BoardingCardJsonParser(val pathname: String) : BoardingCardClassifier, BoardingCardSorter {
-    private var boardingCardsFile = BoardingCardsFile(pathname)
-    var boardingCards = parseLine(boardingCardsFile)
-}
 
